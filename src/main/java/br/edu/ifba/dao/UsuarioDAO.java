@@ -1,12 +1,12 @@
 package br.edu.ifba.dao;
 
 import br.edu.ifba.model.Usuario;
-
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +14,7 @@ public class UsuarioDAO {
 
     // CREATE
     public void salvar(Usuario usuario) throws SQLException {
-
-        String sql =
-                "INSERT INTO usuario (id, nome, email, senha, tipo) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (id, nome, email, senha, tipo) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -34,9 +31,7 @@ public class UsuarioDAO {
 
     // READ
     public List<Usuario> listarTodos() throws SQLException {
-
         List<Usuario> lista = new ArrayList<>();
-
         String sql = "SELECT * FROM usuario";
 
         try (Connection conn = ConexaoDB.getConexao();
@@ -44,7 +39,6 @@ public class UsuarioDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-
                 Usuario u = new Usuario();
 
                 u.setId(rs.getString("id"));
@@ -60,13 +54,8 @@ public class UsuarioDAO {
     }
 
     // LOGIN
-    public Usuario autenticar(String email, String senha)
-            throws SQLException {
-
-        String sql =
-                "SELECT * FROM usuario " +
-                "WHERE email = ? " +
-                "AND senha = ?";
+    public Usuario autenticar(String email, String senha) throws SQLException {
+        String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -74,22 +63,48 @@ public class UsuarioDAO {
             stmt.setString(1, email);
             stmt.setString(2, senha);
 
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Usuario usuario = new Usuario();
 
-            if (rs.next()) {
+                    usuario.setId(rs.getString("id"));
+                    usuario.setNome(rs.getString("nome"));
+                    usuario.setEmail(rs.getString("email"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setTipo(rs.getString("tipo"));
 
-                Usuario usuario = new Usuario();
-
-                usuario.setId(rs.getString("id"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
-                usuario.setTipo(rs.getString("tipo"));
-
-                return usuario;
+                    return usuario;
+                }
             }
         }
 
         return null;
+    }
+    
+    // DASHBOARD ADMIN - Contagem
+    public Map<String, Integer> contarUsuariosPorTipo() throws SQLException {
+        Map<String, Integer> resultado = new LinkedHashMap<>();
+
+        // Utilizando Text Blocks do Java para queries mais legíveis
+        String sql = """
+            SELECT tipo, COUNT(*) AS quantidade
+            FROM usuario
+            GROUP BY tipo
+            ORDER BY quantidade DESC
+        """;
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                resultado.put(
+                    rs.getString("tipo"),
+                    rs.getInt("quantidade")
+                );
+            }
+        }
+
+        return resultado;
     }
 }

@@ -1,11 +1,9 @@
 package br.edu.ifba.controller;
 
-import br.edu.ifba.dao.UsuarioDAO;
-
 import br.edu.ifba.model.Usuario;
+import br.edu.ifba.dao.UsuarioDAO; // Importação do DAO adicionada!
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,66 +11,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.setCharacterEncoding("UTF-8");
-
+        
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
 
-        UsuarioDAO dao = new UsuarioDAO();
-
         try {
+            // AGORA SIM: Chamando o banco de dados para validar o usuário
+            UsuarioDAO dao = new UsuarioDAO();
+            
+            // ATENÇÃO: Verifique se o método no seu DAO se chama "autenticar" mesmo!
+            Usuario usuarioLogado = dao.autenticar(email, senha);
 
-            Usuario usuario = dao.autenticar(email, senha);
+            if (usuarioLogado != null) {
+                
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario", usuarioLogado);
 
-            if (usuario != null) {
+                String tipoUsuario = usuarioLogado.getTipo();
 
-                HttpSession sessao = request.getSession();
-
-                sessao.setAttribute("usuario", usuario);
-
-                switch (usuario.getTipo()) {
-
-                    case "Estudante":
-                        response.sendRedirect("dashboardEstudante.jsp");
-                        break;
-
-                    case "Professor Orientador":
-                        response.sendRedirect("dashboardProfessor.jsp");
-                        break;
-
-                    case "Comunidade Externa":
-                        response.sendRedirect("dashboardComunidade.jsp");
-                        break;
-
-                    case "Administrador":
-                        response.sendRedirect("dashboardAdmin.jsp");
-                        break;
-
-                    default:
-                        response.sendRedirect("index.jsp");
+                // Redirecionamento correto usando o AdminServlet
+                if (tipoUsuario.equalsIgnoreCase("Administrador") || tipoUsuario.equalsIgnoreCase("Admin")) {
+                    response.sendRedirect(request.getContextPath() + "/AdminServlet");
+                    
+                } else if (tipoUsuario.equalsIgnoreCase("Professor Orientador") || tipoUsuario.equalsIgnoreCase("Professor")) {
+                    response.sendRedirect("dashboardProfessor.jsp");
+                    
+                } else if (tipoUsuario.toLowerCase().contains("empresa")) {
+                    response.sendRedirect("dashboardEmpresa.jsp");
+                    
+                } else if (tipoUsuario.toLowerCase().contains("comunidade")) {
+                    response.sendRedirect("dashboardComunidade.jsp");
+                    
+                } else {
+                    response.sendRedirect("dashboardEstudante.jsp");
                 }
-
+                
             } else {
-
-                response.sendRedirect("login.jsp?erro=1");
-
+                request.setAttribute("mensagemErro", "E-mail ou senha incorretos!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-
+            
         } catch (Exception e) {
-
-            throw new ServletException(
-                    "Erro ao autenticar usuário.",
-                    e
-            );
-
+            e.printStackTrace();
+            request.setAttribute("mensagemErro", "Erro interno no servidor. Tente novamente mais tarde.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }

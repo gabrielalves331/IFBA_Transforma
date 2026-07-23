@@ -1,0 +1,157 @@
+@charset "UTF-8";
+
+body {
+    background: #f5f6f8;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* =========================================
+   SIDEBAR (Padrão Admin Figma)
+========================================= */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #1a5c38; /* Verde escuro institucional */
+    color: white;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.sidebar-top .logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-top .logo-img {
+    max-width: 200px;
+    height: auto;
+    mix-blend-mode: screen;
+}
+
+.sidebar h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px 5px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: opacity 0.2s;
+}
+
+.sidebar-menu a:hover, .sidebar-menu a.active {
+    opacity: 0.8;
+    font-weight: bold;
+}
+
+/* BOTÃO SAIR ESTILO PÍLULA MINT */
+.btn-sair-container {
+    margin-bottom: 10px;
+}
+
+.btn-sair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cce5d8;
+    color: #1a5c38;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.btn-sair:hover {
+    background-color: #b3d7c3;
+}
+
+/* =========================================
+   CONTEÚDO PRINCIPAL (DASHBOARDS)
+========================================= */
+.content {
+    margin-left: 260px; /* Mesmo tamanho da sidebar */
+    padding: 35px;
+    width: calc(100% - 260px); /* Garante que o conteúdo não passe da tela direita */
+    box-sizing: border-box;
+}
+
+.card-dashboard {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    background: #ffffff;
+}
+
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    background: #ffffff;
+}
+
+.profile-badge {
+    background-color: rgba(25, 94, 61, 0.1);
+    color: #195e3d;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.85rem;
+}
+
+.project-grid-card {
+    background: #ffffff;
+    border: none;
+    border-left: 5px solid #195e3d;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+
+.project-grid-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* BOTÕES CUSTOMIZADOS */
+.btn-green {
+    background-color: #195e3d;
+    color: white;
+    border: none;
+}
+
+.btn-green:hover {
+    background-color: #13472e;
+    color: white;
+}
+
+.btn-outline-green {
+    color: #195e3d;
+    border-color: #195e3d;
+    background-color: transparent;
+}
+
+.btn-outline-green:hover {
+    background-color: #195e3d;
+    color: white;
+    border-color: #195e3d;
+}

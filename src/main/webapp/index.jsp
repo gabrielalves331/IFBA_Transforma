@@ -60,64 +60,41 @@
 
 <nav class="navbar navbar-expand-lg bg-white shadow-sm">
     <div class="container">
-
-        <a class="navbar-brand fw-bold text-success" href="#">
-            IFBA Transforma
-        </a>
-
+        <a class="navbar-brand fw-bold text-success" href="#">IFBA Transforma</a>
         <div class="ms-auto">
-
-            <a href="login.jsp" class="btn btn-outline-success me-2">
-                Entrar
-            </a>
-
-            <a href="cadastro.jsp" class="btn btn-success">
-                Cadastre-se
-            </a>
-
+            <a href="login.jsp" class="btn btn-outline-success me-2">Entrar</a>
+            
+            <!-- ALTERADO: Aponta para a página de escolha -->
+            <a href="escolha_perfil.jsp" class="btn btn-success">Cadastre-se</a> 
         </div>
-
     </div>
 </nav>
 
 <section class="hero">
-
     <div class="container">
-
         <div class="row align-items-center">
-
             <div class="col-md-6">
-
-                <h1 class="titulo">
-                    Conectando a comunidade ao IFBA
-                </h1>
-
+                <h1 class="titulo">Conectando a comunidade ao IFBA</h1>
                 <p class="subtitulo mt-4">
                     Transforme problemas reais em projetos acadêmicos.
                     Cadastre demandas, acompanhe projetos e gere impacto social.
                 </p>
-
                 <div class="mt-4">
+                    
+                    <!-- ALTERADO: Aponta para a página de escolha -->
+                    <a href="escolha_perfil.jsp" class="btn btn-ifba btn-lg me-2">Começar Agora</a>
 
-                    <a href="cadastro.jsp" class="btn btn-ifba btn-lg me-2">
-                        Começar Agora
-                    </a>
-
-                    <a href="login.jsp" class="btn btn-outline-success btn-lg">
-                        Entrar
-                    </a>
-
+                    <a href="login.jsp" class="btn btn-outline-success btn-lg">Entrar</a>
                 </div>
-
             </div>
 
             <div class="col-md-6 text-center">
 
-                <img
-                    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                    width="350"
-                    class="img-fluid"
-                >
+         <img
+    src="logoifbaTransforma.png"
+    width="700"
+    alt="Logo IFBA Transforma"
+>
 
             </div>
 
