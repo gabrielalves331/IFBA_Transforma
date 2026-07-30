@@ -3,146 +3,51 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Demandas - IFBA Transforma</title>
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     
-    <style>
-        /* Estilos específicos da página de cadastro para garantir o layout do Figma */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-        }
-
-        .content {
-            margin-left: 260px;
-            padding: 40px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            width: calc(100% - 260px);
-        }
-
-        .page-title {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #000000;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .form-container {
-            background-color: #e1e1e1;
-            border-radius: 15px;
-            padding: 35px 45px;
-            width: 100%;
-            max-width: 680px;
-            box-sizing: border-box;
-        }
-
-        .form-label-custom {
-            font-size: 0.95rem;
-            color: #333333;
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-
-        .form-control-custom {
-            background-color: #d2d2d2;
-            border: 1px solid #999999;
-            border-radius: 6px;
-            padding: 8px 12px;
-            color: #000000;
-            width: 100%;
-        }
-
-        .form-control-custom:focus {
-            background-color: #dadada;
-            border-color: #1a5c38;
-            outline: none;
-            box-shadow: none;
-        }
-
-        .tag-preview {
-            background-color: #005f32;
-            color: white;
-            padding: 4px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-right: 8px;
-            margin-bottom: 5px;
-        }
-
-        /* CONTAINER E ESTILO DO NOVO BOTÃO DE ENVIAR */
-        .btn-enviar-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 25px;
-        }
-
-        .btn-enviar {
-            background-color: #005f32;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            width: 100%;
-            max-width: 300px; /* Deixa o botão centralizado e elegante, sem ocupar a largura inteira de forma exagerada */
-            transition: background-color 0.2s, transform 0.1s;
-            cursor: pointer;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-enviar:hover {
-            background-color: #004423;
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-enviar:active {
-            transform: translateY(1px);
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Seu CSS Customizado -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="d-flex"> 
+<body> 
     
+    <!-- SIDEBAR IMPORTADA -->
     <jsp:include page="sidebar.jsp" />
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="content">
         
-        <h1 class="page-title">Cadastro de Demandas</h1>
+        <!-- CABEÇALHO DA PÁGINA -->
+        <div class="mb-4">
+            <h1 class="page-title m-0">Cadastro de Demandas</h1>
+            <p class="subtitulo mb-0">Cadastre uma nova necessidade ou desafio para ser transformado em projeto acadêmico.</p>
+        </div>
 
+        <!-- MENSAGEM DE ERRO DINÂMICA -->
         <% if (request.getAttribute("erro") != null) { %>
-            <div class="alert alert-danger w-100" style="max-width: 680px;" role="alert">
-                <%= request.getAttribute("erro") %>
+            <div class="alert alert-danger p-3 mb-4 rounded-3 small border-0 shadow-sm" role="alert" style="max-width: 800px;">
+                <strong>Erro:</strong> <%= request.getAttribute("erro") %>
             </div>
         <% } %>
 
-        <div class="form-container">
+        <!-- CONTAINER DO FORMULÁRIO -->
+        <div class="card-painel p-4" style="max-width: 800px;">
             <form action="CadastrarDemandaServlet" method="POST">
                 
                 <!-- TÍTULO -->
                 <div class="mb-3">
-                    <label class="form-label-custom">Título</label>
-                    <input type="text" name="titulo" class="form-control form-control-custom" required>
+                    <label class="form-label text-muted small fw-bold">Título</label>
+                    <input type="text" name="titulo" class="form-control" placeholder="Ex: Sistema de Gestão para Horta Comunitária" required style="border: 1px solid var(--color-border); border-radius: var(--radius-md);">
                 </div>
 
                 <!-- ÁREA / SETOR -->
                 <div class="mb-3">
-                    <label class="form-label-custom">Área / Setor</label>
-                    <select name="subareaId" class="form-select form-control-custom" required>
-                        <option value="" selected disabled hidden></option>
+                    <label class="form-label text-muted small fw-bold">Área / Setor</label>
+                    <select name="subareaId" class="form-select" required style="border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+                        <option value="" selected disabled hidden>Selecione a área responsável</option>
                         <option value="1">Tecnologia da Informação</option>
                         <option value="2">Eletrotécnica / Energia</option>
                         <option value="3">Mecânica / Automação</option>
@@ -152,43 +57,45 @@
 
                 <!-- DESCRIÇÃO -->
                 <div class="mb-3">
-                    <label class="form-label-custom">Descrição</label>
-                    <textarea name="descricao" class="form-control form-control-custom" rows="4" required></textarea>
+                    <label class="form-label text-muted small fw-bold">Descrição</label>
+                    <textarea name="descricao" class="form-control" rows="4" placeholder="Descreva detalhadamente o problema ou desafio a ser resolvido..." required style="border: 1px solid var(--color-border); border-radius: var(--radius-md);"></textarea>
                 </div>
 
                 <!-- REQUISITOS -->
                 <div class="mb-3">
-                    <label class="form-label-custom">Requisitos</label>
-                    <div class="mb-2">
-                        <span class="tag-preview" style="background-color: #555;">EX:</span>
-                        <span class="tag-preview">Java Web</span>
-                        <span class="tag-preview">Banco de Dados</span>
+                    <label class="form-label text-muted small fw-bold">Requisitos</label>
+                    <div class="mb-2 d-flex gap-1 flex-wrap align-items-center">
+                        <span class="badge bg-secondary text-light p-1 px-2" style="font-size: 0.75rem;">EX:</span>
+                        <span class="badge bg-light text-secondary border p-1 px-2" style="font-size: 0.75rem;">Java Web</span>
+                        <span class="badge bg-light text-secondary border p-1 px-2" style="font-size: 0.75rem;">Banco de Dados</span>
                     </div>
-                    <input type="text" name="contexto" class="form-control form-control-custom" placeholder="Separe os requisitos por vírgula">
+                    <input type="text" name="contexto" class="form-control" placeholder="Separe os requisitos por vírgula" style="border: 1px solid var(--color-border); border-radius: var(--radius-md);">
                 </div>
 
                 <!-- TAMANHO DA EQUIPE -->
                 <div class="mb-3">
-                    <label class="form-label-custom">Tamanho da Equipe</label>
-                    <input type="text" name="impactoEsperado" class="form-control form-control-custom" placeholder="Ex: 3 a 5 alunos">
+                    <label class="form-label text-muted small fw-bold">Tamanho da Equipe</label>
+                    <input type="text" name="impactoEsperado" class="form-control" placeholder="Ex: 3 a 5 alunos" style="border: 1px solid var(--color-border); border-radius: var(--radius-md);">
                 </div>
 
                 <!-- PRAZO DE ENTREGA -->
                 <div class="mb-4">
-                    <label class="form-label-custom">Prazo de Entrega</label>
-                    <input type="date" name="prazo" class="form-control form-control-custom" required>
+                    <label class="form-label text-muted small fw-bold">Prazo de Entrega</label>
+                    <input type="date" name="prazo" class="form-control" required style="border: 1px solid var(--color-border); border-radius: var(--radius-md);">
                 </div>
 
-                <!-- BOTÃO SUBMIT CORRIGIDO -->
-                <div class="btn-enviar-container">
-                    <button type="submit" class="btn-enviar">Enviar</button>
+                <!-- BOTÃO DE SUBMIT -->
+                <div class="text-end border-top pt-3">
+                    <button type="submit" class="btn btn-primary px-5 fw-bold" style="border-radius: var(--radius-md);">
+                        Cadastrar Demanda
+                    </button>
                 </div>
 
             </form>
         </div>
     </main>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

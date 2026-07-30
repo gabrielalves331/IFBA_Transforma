@@ -14,128 +14,120 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Estudante - IFBA Transforma</title>
     
-    <!-- CORREÇÃO: Adicionado o CSS do Bootstrap que estava faltando -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
-    <!-- O seu CSS customizado continua aqui -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    
+    <!-- Seu CSS Customizado -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="d-flex"> <!-- CORREÇÃO: Adicionado d-flex para alinhar com a Sidebar -->
-    
+<body>
+
+    <!-- SIDEBAR IMPORTADA -->
     <jsp:include page="sidebar.jsp" />
 
-    <div class="content w-100 p-4"> <!-- Adicionado w-100 e p-4 para garantir que ocupe o espaço correto -->
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="content">
 
         <!-- CABEÇALHO DO DASHBOARD -->
-        <div class="card card-dashboard p-4 mb-4 shadow-sm border-0">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="card-painel mb-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div>
-                    <h2 class="mb-1 fw-bold">Bem-vindo, <%= usuario.getNome() %></h2>
-                    <p class="text-muted mb-0 mt-2">
-                        <span class="badge bg-success me-2"><%= usuario.getTipo() %></span>
-                        Curso: <strong class="text-dark">Ciência da Computação</strong> | 
-                        <strong class="text-dark">4º Semestre</strong>
-                    </p>
+                    <h1 class="page-title mb-1">Bem-vindo, <%= usuario.getNome() %></h1>
+                    <div class="subtitulo m-0 d-flex align-items-center gap-2 flex-wrap">
+                        <span class="badge-status concluido"><%= usuario.getTipo() %></span>
+                        <span>Curso: <strong class="text-dark">Ciência da Computação</strong></span>
+                        <span class="text-muted">|</span>
+                        <span><strong class="text-dark">4º Semestre</strong></span>
+                    </div>
                 </div>
-                <div class="text-end font-monospace text-muted mt-2 mt-md-0" style="font-size: 0.85rem;">
-                    ID/CPF: <%= usuario.getId() %>
-                </div>
-            </div>
-        </div>
-
-        <!-- METRICAS -->
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <div class="card card-dashboard p-4 text-center text-md-start shadow-sm border-0">
-                    <h5 class="text-muted" style="font-size: 0.95rem;">Projetos Ativos</h5>
-                    <h1 class="display-5 fw-bold text-success">2</h1>
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <div class="card card-dashboard p-4 text-center text-md-start shadow-sm border-0">
-                    <h5 class="text-muted" style="font-size: 0.95rem;">Entregas Pendentes</h5>
-                    <h1 class="display-5 fw-bold text-warning">2</h1>
+                <div class="text-end font-monospace text-muted" style="font-size: var(--fs-xs);">
+                    Matrícula/ID: <strong><%= usuario.getId() %></strong>
                 </div>
             </div>
         </div>
 
-        <!-- AÇÕES RÁPIDAS -->
-        <div class="card card-dashboard p-4 mb-4 shadow-sm border-0">
-            <h4 class="mb-3 fw-bold" style="font-size: 1.2rem;">Ações Rápidas</h4>
-            <div>
-                <a href="#" class="btn btn-success me-2 px-4" style="background-color: #1a5c38; border: none;">
-                    Nova Entrega de Arquivo
-                </a>
-                <a href="meu_perfil.jsp" class="btn btn-outline-secondary px-4">
-                    Atualizar Cadastro
-                </a>
+        <!-- CARDS DE MÉTRICAS -->
+        <div class="dashboard-grid mb-4">
+            <div class="card-dashboard card-body-custom">
+                <h3 class="mb-2" style="color: var(--color-text-secondary); font-size: var(--fs-md);">Projetos Ativos</h3>
+                <h2 style="font-size: var(--fs-2xl); color: var(--color-primary);">2</h2>
+                <span class="badge-status andamento mt-2">Em andamento</span>
+            </div>
+
+            <div class="card-dashboard card-body-custom">
+                <h3 class="mb-2" style="color: var(--color-text-secondary); font-size: var(--fs-md);">Entregas Pendentes</h3>
+                <h2 style="font-size: var(--fs-2xl); color: var(--color-warning);">2</h2>
+                <span class="badge-status pendente mt-2">Aguardando envio</span>
             </div>
         </div>
 
         <!-- SEÇÃO DE PROJETOS EM GRID -->
-        <div class="card card-dashboard p-4 shadow-sm border-0">
-            <h4 class="mb-4 fw-bold" style="font-size: 1.2rem;">Meus Projetos em Andamento</h4>
-            
+        <div class="card-painel">
+            <h2 style="font-size: var(--fs-lg); font-weight: var(--fw-bold);" class="mb-4">Meus Projetos em Andamento</h2>
+
             <div class="row g-4">
                 
-                <!-- PROJETO 1 -->
+                <!-- PROJETO 1 (CLICÁVEL) -->
                 <div class="col-md-6">
-                    <div class="card project-grid-card p-4 h-100 border-start border-4 border-success">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h5 class="mb-1 text-dark fw-bold" style="font-size: 1.15rem;">Plataforma Web: Site para Doações</h5>
-                                <p class="text-muted small mb-0">Demanda: Associação de Moradores</p>
+                    <a href="detalhes_projeto.jsp?id=1" class="text-decoration-none text-reset d-block h-100">
+                        <div class="project-grid-card">
+                            <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                                <div>
+                                    <h3 class="mb-1 text-dark fw-bold" style="font-size: var(--fs-md);">Plataforma Web: Site para Doações</h3>
+                                    <p class="text-muted small mb-0">Demanda: Associação de Moradores</p>
+                                </div>
+                                <span class="badge-status andamento">Em Desenvolvimento</span>
                             </div>
-                            <span class="badge bg-primary px-2 py-1">Em Desenvolvimento</span>
+
+                            <div class="mt-4">
+                                <label class="form-label small text-muted mb-1">Progresso do Projeto:</label>
+                                <div class="progress my-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 50%; background-color: var(--color-primary);" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 small text-muted">
+                                    <span>Etapa: Levantamento de Requisitos</span>
+                                    <span class="fw-bold text-dark">50%</span>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="mt-4">
-                            <label class="form-label small text-muted mb-1">Progresso do Projeto:</label>
-                            <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="d-flex justify-content-between mt-2 small text-muted" style="font-size: 0.8rem;">
-                                <span>Etapa: Levantamento de Requisitos</span>
-                                <span class="fw-bold">50%</span>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
 
-                <!-- PROJETO 2 -->
+                <!-- PROJETO 2 (CLICÁVEL) -->
                 <div class="col-md-6">
-                    <div class="card project-grid-card p-4 h-100 border-start border-4 border-warning">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h5 class="mb-1 text-dark fw-bold" style="font-size: 1.15rem;">Oficina de Informática para Idosos</h5>
-                                <p class="text-muted small mb-0">Demanda: Associação de Moradores</p>
+                    <a href="detalhe_projeto.jsp?id=2" class="text-decoration-none text-reset d-block h-100">
+                        <div class="project-grid-card" style="border-left-color: var(--color-warning);">
+                            <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                                <div>
+                                    <h3 class="mb-1 text-dark fw-bold" style="font-size: var(--fs-md);">Oficina de Informática para Idosos</h3>
+                                    <p class="text-muted small mb-0">Demanda: Associação de Moradores</p>
+                                </div>
+                                <span class="badge-status pendente">Em Planejamento</span>
                             </div>
-                            <span class="badge bg-warning text-dark px-2 py-1">Em Planejamento</span>
+
+                            <div class="mt-4">
+                                <label class="form-label small text-muted mb-1">Progresso do Projeto:</label>
+                                <div class="progress my-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 15%; background-color: var(--color-warning);" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 small text-muted">
+                                    <span>Etapa: Planejamento da Oficina</span>
+                                    <span class="fw-bold text-dark">15%</span>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="mt-4">
-                            <label class="form-label small text-muted mb-1">Progresso do Projeto:</label>
-                            <div class="progress" style="height: 8px;">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="d-flex justify-content-between mt-2 small text-muted" style="font-size: 0.8rem;">
-                                <span>Etapa: Planejamento da Oficina</span>
-                                <span class="fw-bold">15%</span>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
 
             </div>
         </div>
 
-    </div>
+    </main>
 
-    <!-- Script do Bootstrap que também estava faltando! -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

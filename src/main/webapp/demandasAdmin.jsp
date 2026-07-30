@@ -1,28 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%-- Supondo que você tenha uma classe Demanda no seu pacote model --%>
-<%-- <%@ page import="br.edu.ifba.model.Demanda" %> --%>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Demandas - IFBA Transforma</title>
-    <!-- Bootstrap para modais e grid estrutural rápido -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
+        :root {
+            --color-primary: #1a5c38;
+            --color-primary-dark: #13472a;
+            --color-primary-light: #cce5d8;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f5f6f8;
+            min-height: 100vh;
         }
 
-      
-        /* CONTEÚDO */
+        /* FIX DA SIDEBAR */
+        .sidebar {
+            width: 260px;
+            min-width: 260px;
+            min-height: 100vh;
+            background-color: var(--color-primary-light) !important;
+            border-right: 1px solid #dee2e6;
+        }
+
+        /* Estilização dos Links da Sidebar */
+        .sidebar .nav-link {
+            color: var(--color-primary) !important;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--color-primary) !important;
+            color: #ffffff !important;
+        }
+
+        /* CONTEÚDO PRINCIPAL (Flexbox ajustado) */
         .content {
-            margin-left: 260px;
+            flex-grow: 1; /* Ocupa todo o resto da tela */
             padding: 35px;
+            /* REMOVIDO: margin-left: 260px que quebrava o layout */
         }
 
         .content h1 {
@@ -38,7 +64,7 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 30px;
-            align-items: start; /* Impede que os cards vizinhos estiquem verticalmente */
+            align-items: start;
         }
 
         .area-card {
@@ -52,15 +78,15 @@
         }
 
         .area-card:hover {
-            border-color: #1a5c38;
+            border-color: var(--color-primary);
         }
 
         .area-card h3 {
             font-size: 1.2rem;
             color: #222222;
             font-weight: bold;
-            margin-bottom: 10x;
-            padding-right: 45px; /* Abre espaço seguro para o botão no topo */
+            margin-bottom: 10px;
+            padding-right: 45px;
         }
 
         .demandas-count {
@@ -72,7 +98,7 @@
             display: inline-block;
         }
 
-        /* BOTÃO MAIS (+) CORRIGIDO E ANIMADO */
+        /* BOTÃO EXPANDIR (+) */
         .btn-expandir {
             position: absolute;
             top: 25px;
@@ -80,7 +106,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: #1a5c38;
+            background-color: var(--color-primary);
             color: white;
             border: none;
             font-size: 1.4rem;
@@ -91,20 +117,19 @@
             cursor: pointer;
             transition: background-color 0.2s, transform 0.3s ease;
             z-index: 5;
-            padding-bottom: 4px; /* Ajuste fino para centralizar o caractere '+' */
+            padding-bottom: 4px;
         }
 
         .btn-expandir:hover {
-            background-color: #13472a;
+            background-color: var(--color-primary-dark);
         }
 
-        /* Classe automática do Bootstrap quando o alvo está aberto: gira o '+' para virar um '×' */
         .btn-expandir:not(.collapsed) {
             transform: rotate(45deg);
-            background-color: #dc3545; /* Muda para vermelho sutil ao abrir, opcional */
+            background-color: #dc3545;
         }
 
-        /* LISTA EXPANSÍVEL DE DEMANDAS DENTRO DO CARD */
+        /* LISTA EXPANSÍVEL */
         .demandas-lista {
             margin-top: 20px;
             border-top: 1px solid #eeeeee;
@@ -146,8 +171,8 @@
         }
 
         .btn-detalhes {
-            background-color: #cce5d8;
-            color: #1a5c38;
+            background-color: var(--color-primary-light);
+            color: var(--color-primary);
         }
 
         .btn-detalhes:hover {
@@ -156,16 +181,16 @@
     </style>
 </head>
 <body class="d-flex">
+
+    <!-- IMPORTAÇÃO DA SIDEBAR -->
     <jsp:include page="sidebar.jsp" />
-        </div>
-      
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="content">
         <h1>Gerenciar Demandas</h1>
         <p class="text-muted">Explore as demandas submetidas pela sociedade separadas por área de atuação.</p>
 
-        <!-- CONTAINER DO ACCORDION PARA CONTROLAR A ABERTURA ÚNICA -->
+        <!-- CONTAINER DO ACCORDION -->
         <div class="areas-grid" id="accordionDemandas">
             
             <!-- CARD: TECNOLOGIA DA INFORMAÇÃO -->
@@ -173,7 +198,6 @@
                 <h3>Tecnologia da Informação</h3>
                 <span class="demandas-count">2 Demandas ativas</span>
                 
-                <!-- Adicionado a classe inicial 'collapsed' para a rotação sincronizar perfeitamente -->
                 <button class="btn-expandir collapsed" type="button" 
                         data-bs-toggle="collapse" 
                         data-bs-target="#listaTI" 
@@ -230,7 +254,7 @@
         </div>
     </main>
 
-    <!-- MODAL DE DETALHES E EDIÇÃO -->
+    <!-- MODAL DE DETALHES -->
     <div class="modal fade" id="modalDetalhesDemanda" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content" style="border-radius: 12px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
@@ -281,7 +305,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

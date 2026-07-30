@@ -1,5 +1,5 @@
 <%@page import="br.edu.ifba.model.Usuario"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     Usuario usuario = (Usuario) session.getAttribute("usuario");
     if (usuario == null) {
@@ -11,112 +11,152 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Demandas - IFBA Transforma</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Seu CSS Customizado -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<jsp:include page="sidebar.jsp" />
 
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="content">
+    <!-- SIDEBAR IMPORTADA -->
+    <jsp:include page="sidebar.jsp" />
 
-    <h2 class="mb-4 text-dark fw-bold">Buscar Demandas Sociais</h2>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="content">
 
-    <!-- PAINEL DE FILTROS -->
-    <div class="card card-custom p-4 mb-4">
-        <h5 class="text-muted mb-3" style="font-size: 1rem;">Filtros de Pesquisa</h5>
-        <form action="BuscarDemandasServlet" method="GET">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label class="form-label text-secondary small fw-bold">Área de Atuação</label>
-                    <select class="form-select">
-                        <option>Todas</option>
-                        <option>Tecnologia</option>
-                        <option>Educação</option>
-                        <option>Turismo</option>
-                        <option>Gestão</option>
-                    </select>
+        <!-- CABEÇALHO DA PÁGINA -->
+        <div class="card-painel mb-4">
+            <h1 class="page-title mb-1">Buscar Demandas Sociais</h1>
+            <p class="subtitulo m-0">Encontre e assuma demandas submetidas pela comunidade para suas ações de extensão.</p>
+        </div>
+
+        <!-- PAINEL DE FILTROS -->
+        <div class="card-painel mb-4">
+            <h3 class="fs-5 mb-3">Filtros de Pesquisa</h3>
+            
+            <form action="BuscarDemandasServlet" method="GET">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Área de Atuação</label>
+                        <select name="area" class="form-select">
+                            <option value="">Todas as áreas</option>
+                            <option value="tecnologia">Tecnologia e Inovação</option>
+                            <option value="educacao">Educação</option>
+                            <option value="saude">Saúde e Bem-estar</option>
+                            <option value="meio-ambiente">Meio Ambiente</option>
+                            <option value="gestao">Gestão e Negócios</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Status da Demanda</label>
+                        <select name="status" class="form-select">
+                            <option value="">Todos os status</option>
+                            <option value="disponivel">Disponíveis para Assumir</option>
+                            <option value="em_analise">Em Análise</option>
+                            <option value="assumida">Já Assumidas</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Localidade / Comunidade</label>
+                        <input type="text" name="localidade" class="form-control" placeholder="Ex: Bairro Central, ONG, Associação...">
+                    </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label class="form-label text-secondary small fw-bold">Status da Demanda</label>
-                    <select class="form-select">
-                        <option>Todos</option>
-                        <option>Submetida</option>
-                        <option>Em análise</option>
-                        <option>Assumida</option>
-                        <option>Concluída</option>
-                    </select>
+                <div class="mt-3 text-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        🔍 Pesquisar Demandas
+                    </button>
                 </div>
+            </form>
+        </div>
 
-                <div class="col-md-4 mb-3">
-                    <label class="form-label text-secondary small fw-bold">Localidade / Comunidade</label>
-                    <input type="text" class="form-control" placeholder="Ex: Bairro, Ong, Associação...">
-                </div>
-            </div>
+        <!-- LISTAGEM DE RESULTADOS -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fs-5 m-0">Demandas Encontradas (3)</h3>
+            <span class="text-muted small">Exibindo demandas recentes</span>
+        </div>
 
-            <button type="submit" class="btn btn-green px-4 mt-2 fw-bold">
-                Pesquisar Demandas
-            </button>
-        </form>
-    </div>
-
-    <!-- LISTAGEM DE DEMANDAS -->
-    <h5 class="text-secondary mb-3">Resultados Encontrados</h5>
-
-    <!-- EXEMPLO 1: DEMANDA DISPONÍVEL (Ainda não assumida) -->
-    <div class="card card-custom mb-3 p-3">
-        <div class="card-body p-1">
-            <div class="d-flex justify-content-between align-items-start flex-wrap">
+        <!-- DEMANDA 1: DISPONÍVEL -->
+        <div class="card-demanda mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
-                    <h5 class="fw-bold text-dark mb-1">Sistema para Gestão de Eventos Acadêmicos</h5>
-                    <p class="mb-2 text-muted small">
-                        Área: <span class="text-dark fw-semibold">Tecnologia</span> | 
-                        Local: <span class="text-dark fw-semibold">Campus Central</span>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge-status concluido">Disponível</span>
+                        <span class="badge bg-light text-dark border">Tecnologia</span>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-1">Sistema para Gestão de Eventos Acadêmicos</h4>
+                    <p class="text-muted small mb-0">
+                        Solicitante: <strong>Campus Central IFBA</strong> • Publicado em: 10/05/2026
                     </p>
-                    <span class="badge bg-secondary px-2 py-1">Em Análise</span>
                 </div>
                 
-                <div class="mt-3 mt-md-0">
-                    <!-- Botão Padrão para ver detalhes/assumir -->
-                    <a href="detalheDemanda.jsp?id=1" class="btn btn-outline-green px-4">
+                <div class="d-flex gap-2">
+                    <a href="detalheDemanda.jsp?id=101" class="btn btn-outline-primary fw-bold">
                         Ver Detalhes
                     </a>
+                    <a href="assumirDemanda?id=101" class="btn btn-primary fw-bold">
+                        Assumir Demanda
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- EXEMPLO 2: DEMANDA QUE JÁ FOI ASSUMIDA POR ESTE ESTUDANTE -->
-    <div class="card card-custom mb-3 p-3" style="border-left: 5px solid #195e3d;">
-        <div class="card-body p-1">
-            <div class="d-flex justify-content-between align-items-start flex-wrap">
+        <!-- DEMANDA 2: EM ANÁLISE -->
+        <div class="card-demanda mb-3" style="border-left-color: var(--color-warning);">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
-                    <h5 class="fw-bold text-dark mb-1">Plataforma Web: Site para Doações</h5>
-                    <p class="mb-2 text-muted small">
-                        Área: <span class="text-dark fw-semibold">Tecnologia</span> | 
-                        Local: <span class="text-dark fw-semibold">Associação de Moradores</span>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge-status pendente">Em Análise pelo Orientador</span>
+                        <span class="badge bg-light text-dark border">Educação</span>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-1">Oficina de Inclusão Digital para Jovens</h4>
+                    <p class="text-muted small mb-0">
+                        Solicitante: <strong>Centro Comunitário Esperança</strong> • Publicado em: 08/05/2026
                     </p>
-                    <span class="badge bg-success px-2 py-1">Assumida por Você</span>
                 </div>
                 
-                <!-- REGRA SOLICITADA: Mudança de botões ao assumir a demanda -->
-                <div class="mt-3 mt-md-0 d-flex gap-2">
-                    <a href="analisarDemanda.jsp?id=2" class="btn btn-success px-3" style="background-color: #195e3d; border: none;">
-                        Analisar Demanda
+                <div>
+                    <a href="detalheDemanda.jsp?id=101" class="btn btn-outline-primary fw-bold">
+                        Ver Detalhes
                     </a>
-                    <a href="DesistirDemandaServlet?id=2" class="btn btn-outline-danger px-3">
-                        Desistir da Demanda
+                    <a href="assumirDemanda?id=101" class="btn btn-primary fw-bold">
+                        Assumir Demanda
                     </a>
                 </div>
             </div>
         </div>
-    </div>
 
-</div>
+        <!-- DEMANDA 3: ASSUMIDA PELO ESTUDANTE LOGADO -->
+        <div class="card-demanda mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge-status andamento">Assumida por Você</span>
+                        <span class="badge bg-light text-dark border">Tecnologia</span>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-1">Plataforma Web: Site para Doações</h4>
+                    <p class="text-muted small mb-0">
+                        Solicitante: <strong>Associação de Moradores</strong> • Em andamento desde 01/05/2026
+                    </p>
+                </div>
+                
+                <div>
+                    <a href="detalhes_projeto.jsp?id=1" class="btn btn-primary fw-bold">
+                        Ir para o Projeto →
+                    </a>
+                </div>
+            </div>
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </main>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

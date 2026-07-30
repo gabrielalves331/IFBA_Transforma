@@ -1,12 +1,10 @@
 package br.edu.ifba.controller;
 
-
 import br.edu.ifba.dao.DemandaDAO;
 import br.edu.ifba.model.Demanda;
 import br.edu.ifba.model.Usuario;
 import java.io.IOException;
 
-// TROCADOS DE JAKARTA PARA JAVAX:
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/CadastrarDemandaServlet")
 public class CadastrarDemandaServlet extends HttpServlet {
     
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
@@ -36,13 +35,21 @@ public class CadastrarDemandaServlet extends HttpServlet {
         novaDemanda.setTitulo(titulo);
         novaDemanda.setDescricao(descricao);
         
+        // CORREÇÃO 1: Atribui o ID do usuário criador da demanda (convertido para String)
+        if (usuarioLogado.getId() != null) {
+            novaDemanda.setUsuarioId(String.valueOf(usuarioLogado.getId()));
+        }
+        
         // Regra de negócio baseada no tipo de perfil
-        if (usuarioLogado.getTipo().equalsIgnoreCase("Professor Orientador") || 
-            usuarioLogado.getTipo().equalsIgnoreCase("Professor")) {
+        if (usuarioLogado.getTipo() != null && 
+           (usuarioLogado.getTipo().equalsIgnoreCase("Professor Orientador") || 
+            usuarioLogado.getTipo().equalsIgnoreCase("Professor"))) {
             
             novaDemanda.setStatus("Em Andamento");
             novaDemanda.setDescDemandante("Cadastrado pelo Professor: " + usuarioLogado.getNome());
-            novaDemanda.setOrientadorId(usuarioLogado.getId()); // Autovincula o professor
+            
+            // CORREÇÃO 2: Converte Long para String para evitar erro de tipo incompatível
+            novaDemanda.setOrientadorId(String.valueOf(usuarioLogado.getId())); 
             
         } else {
             // Se for Empresa / Comunidade

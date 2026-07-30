@@ -1,162 +1,109 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>IFBA Transforma</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-
-        body{
-            background:#f5f7fa;
-        }
-
-        .hero{
-            min-height:90vh;
-            display:flex;
-            align-items:center;
-        }
-
-        .titulo{
-            color:#006633;
-            font-weight:700;
-            font-size:3rem;
-        }
-
-        .subtitulo{
-            font-size:1.2rem;
-            color:#555;
-        }
-
-        .btn-ifba{
-            background:#006633;
-            color:white;
-        }
-
-        .btn-ifba:hover{
-            background:#004d26;
-            color:white;
-        }
-
-        .card-info{
-            border:none;
-            border-radius:15px;
-            box-shadow:0 0 20px rgba(0,0,0,0.08);
-        }
-
-        footer{
-            background:#006633;
-            color:white;
-            padding:20px;
-            text-align:center;
-        }
-
-    </style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFBA Transforma - Conectando a Comunidade ao IFBA</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Seu CSS Customizado -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light">
 
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-success" href="#">IFBA Transforma</a>
-        <div class="ms-auto">
-            <a href="login.jsp" class="btn btn-outline-success me-2">Entrar</a>
-            
-            <!-- ALTERADO: Aponta para a página de escolha -->
-            <a href="escolha_perfil.jsp" class="btn btn-success">Cadastre-se</a> 
+    <!-- NAVBAR PRINCIPAL -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" style="color: var(--color-primary, #195e3d);" href="index.jsp">
+                IFBA Transforma
+            </a>
+            <div class="ms-auto d-flex gap-2">
+                <a href="login.jsp" class="btn btn-outline-primary fw-bold">Entrar</a>
+                <a href="escolherPerfil.jsp" class="btn btn-primary fw-bold">Cadastre-se</a> 
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<section class="hero">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h1 class="titulo">Conectando a comunidade ao IFBA</h1>
-                <p class="subtitulo mt-4">
-                    Transforme problemas reais em projetos acadêmicos.
-                    Cadastre demandas, acompanhe projetos e gere impacto social.
-                </p>
-                <div class="mt-4">
-                    
-                    <!-- ALTERADO: Aponta para a página de escolha -->
-                    <a href="escolha_perfil.jsp" class="btn btn-ifba btn-lg me-2">Começar Agora</a>
+    <!-- SEÇÃO HERO -->
+    <section class="hero py-5 my-auto">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6">
+                    <h1 class="page-title display-5 fw-bold mb-3" style="font-size: var(--fs-2xl, 2.25rem);">
+                        Conectando a comunidade ao IFBA
+                    </h1>
+                    <p class="subtitulo lead text-secondary mb-4">
+                        Transforme problemas reais em projetos acadêmicos.
+                        Cadastre demandas, acompanhe projetos e gere impacto social.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="escolha_perfil.jsp" class="btn btn-primary btn-lg px-4 fw-bold">
+                            Começar Agora
+                        </a>
+                        <a href="login.jsp" class="btn btn-outline-secondary btn-lg px-4 fw-bold">
+                            Entrar
+                        </a>
+                    </div>
+                </div>
 
-                    <a href="login.jsp" class="btn btn-outline-success btn-lg">Entrar</a>
+                <div class="col-lg-6 text-center">
+                    <img src="logo1.png" alt="Logo IFBA Transforma" class="img-fluid" style="max-width: 500px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE CARDS DE DESTAQUE -->
+    <section class="container mb-5">
+        <div class="row g-4">
+            
+            <div class="col-md-4">
+                <div class="card-painel h-100 p-4 transition-all" style="border-radius: var(--radius-md, 8px);">
+                    <h4 class="fw-bold mb-2" style="color: var(--color-primary, #195e3d); font-size: var(--fs-lg, 1.25rem);">
+                        Comunidade
+                    </h4>
+                    <p class="text-secondary mb-0">
+                        Cadastre desafios e necessidades reais da sua região ou organização para buscar apoio técnico.
+                    </p>
                 </div>
             </div>
 
-            <div class="col-md-6 text-center">
+            <div class="col-md-4">
+                <div class="card-painel h-100 p-4 transition-all" style="border-radius: var(--radius-md, 8px);">
+                    <h4 class="fw-bold mb-2" style="color: var(--color-primary, #195e3d); font-size: var(--fs-lg, 1.25rem);">
+                        Professores
+                    </h4>
+                    <p class="text-secondary mb-0">
+                        Transforme demandas sociais em projetos de Extensão (ACEX) e oriente turmas em soluções práticas.
+                    </p>
+                </div>
+            </div>
 
-         <img
-    src="logoifbaTransforma.png"
-    width="700"
-    alt="Logo IFBA Transforma"
->
-
+            <div class="col-md-4">
+                <div class="card-painel h-100 p-4 transition-all" style="border-radius: var(--radius-md, 8px);">
+                    <h4 class="fw-bold mb-2" style="color: var(--color-primary, #195e3d); font-size: var(--fs-lg, 1.25rem);">
+                        Estudantes
+                    </h4>
+                    <p class="text-secondary mb-0">
+                        Aplique na prática os conhecimentos acadêmicos em projetos reais com verdadeiro impacto social.
+                    </p>
+                </div>
             </div>
 
         </div>
+    </section>
 
-    </div>
-
-</section>
-
-<section class="container mb-5">
-
-    <div class="row">
-
-        <div class="col-md-4">
-
-            <div class="card card-info p-4">
-
-                <h4>Comunidade</h4>
-
-                <p>
-                    Cadastre desafios e necessidades reais.
-                </p>
-
-            </div>
-
+    <!-- RODAPÉ -->
+    <footer class="mt-auto py-3 bg-white text-center text-muted border-top small">
+        <div class="container">
+            IFBA Transforma &copy; 2026 — Todos os direitos reservados.
         </div>
+    </footer>
 
-        <div class="col-md-4">
-
-            <div class="card card-info p-4">
-
-                <h4>Professores</h4>
-
-                <p>
-                    Transforme demandas em projetos ACEX.
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card card-info p-4">
-
-                <h4>Estudantes</h4>
-
-                <p>
-                    Participe de projetos que impactam a sociedade.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<footer>
-    IFBA Transforma © 2026
-</footer>
-
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
