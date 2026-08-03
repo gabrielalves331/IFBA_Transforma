@@ -1,5 +1,105 @@
 package br.edu.ifba.dao;
 
+import br.edu.ifba.model.Anexo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnexoDAO {
 
+    // CREATE
+    public void salvar(Anexo anexo) throws SQLException {
+
+        String sql =
+                "INSERT INTO anexo (id, projeto_id, nome_arquivo, caminho_arquivo, tipo_arquivo) " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, anexo.getId());
+            stmt.setString(2, anexo.getProjetoId());
+            stmt.setString(3, anexo.getNomeArquivo());
+            stmt.setString(4, anexo.getCaminhoArquivo());
+            stmt.setString(5, anexo.getTipoArquivo());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    // READ - todos os anexos de um projeto
+    public List<Anexo> listarPorProjeto(String projetoId) throws SQLException {
+
+        List<Anexo> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM anexo WHERE projeto_id = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, projetoId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                lista.add(mapearAnexo(rs));
+            }
+        }
+
+        return lista;
+    }
+
+    // READ - por id
+    public Anexo buscarPorId(String id) throws SQLException {
+
+        String sql = "SELECT * FROM anexo WHERE id = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapearAnexo(rs);
+            }
+        }
+
+        return null;
+    }
+
+    // DELETE
+    public void excluir(String id) throws SQLException {
+
+        String sql = "DELETE FROM anexo WHERE id = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    // Helper para não repetir o mapeamento de ResultSet -> Anexo
+    private Anexo mapearAnexo(ResultSet rs) throws SQLException {
+
+        Anexo a = new Anexo();
+
+        a.setId(rs.getString("id"));
+        a.setProjetoId(rs.getString("projeto_id"));
+        a.setNomeArquivo(rs.getString("nome_arquivo"));
+        a.setCaminhoArquivo(rs.getString("caminho_arquivo"));
+        a.setTipoArquivo(rs.getString("tipo_arquivo"));
+        a.setDataUpload(rs.getTimestamp("data_upload"));
+
+        return a;
+    }
 }
+

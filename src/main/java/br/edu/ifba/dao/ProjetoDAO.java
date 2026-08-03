@@ -1,69 +1,103 @@
 package br.edu.ifba.dao;
 
-import java.sql.Connection;
-import java.util.ArrayList; // Não esqueça de importar
-import java.util.List;      // Não esqueça de importar
 import br.edu.ifba.model.Projeto;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjetoDAO {
 
-    public Map<Integer, Integer> contarProjetosConcluidosPorAno()
-            throws SQLException {
+    // CREATE
+    public void salvar(Projeto projeto) throws SQLException {
 
-        Map<Integer, Integer> resultado = new LinkedHashMap<>();
+        String sql =
+                "INSERT INTO projeto (id, demanda_id, titulo, descricao, status, data_inicio, data_fim_prevista, responsavel_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String sql = """
-            SELECT YEAR(data_fim) AS ano,
-                   COUNT(*) AS quantidade
-            FROM projeto
-            WHERE status = 'Concluído'
-              AND data_fim IS NOT NULL
-            GROUP BY YEAR(data_fim)
-            ORDER BY ano
-        """;
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        try (
-            Connection conn = ConexaoDB.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()
-        ) {
+            stmt.setString(1, projeto.getId());
+            stmt.setString(2, projeto.getDemandaId());
+            stmt.setString(3, projeto.getTitulo());
+            stmt.setString(4, projeto.getDescricao());
+            stmt.setString(5, projeto.getStatus());
+            stmt.setDate(6, projeto.getDataInicio());
+            stmt.setDate(7, projeto.getDataFimPrevista());
+            stmt.setString(8, projeto.getResponsavelId());
 
-            while (rs.next()) {
-
-                resultado.put(
-                    rs.getInt("ano"),
-                    rs.getInt("quantidade")
-                );
-            }
+            stmt.executeUpdate();
         }
-
-        return resultado;
     }
+
+    // READ - todos
     public List<Projeto> listarTodos() throws SQLException {
-        List<Projeto> projetos = new ArrayList<>();
-        String sql = "SELECT * FROM projeto"; // Ajuste os nomes das colunas conforme seu banco
+
+        List<Projeto> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM projeto";
 
         try (Connection conn = ConexaoDB.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Projeto p = new Projeto();
-                p.setId(rs.getInt("id"));
-                p.setTitulo(rs.getString("titulo"));
-                p.setOrientador(rs.getString("orientador"));
-                p.setStatus(rs.getString("status"));
-                projetos.add(p);
+                lista.add(mapearProjeto(rs));
             }
         }
-        return projetos;
+
+        return lista;
     }
 
+    // READ - por id
+    public Projeto buscarPorId(String id) throws SQLException {
+
+        String sql = "SELECT * FROM projeto WHERE id = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapearProjeto(rs);
+            }
+        }
+
+        return null;
+    }
+
+    // UPDATE
+    public void atualizar(Projeto projeto) throws SQLException {
+
+        String sql =
+                "UPDATE projeto SET titulo = ?, descricao = ?, status = ?, " +
+                "data_inicio = ?, data_fim_prevista = ?, responsavel_id = ? " +
+                "WHERE id = ?";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, projeto.getTitulo());
+            stmt.setString(2, projeto.getDescricao());
+            stmt.setString(3, projeto.getStatus());
+            stmt.setDate(4, projeto.getDataInicio());
+            stmt.setDate(5, projeto.getDataFimPrevista());
+            stmt.setString(6, projeto.getResponsavelId());
+            stmt.setString(7, projeto.getId());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    // DELETE
     public void excluir(int id) throws SQLException {
         String sql = "DELETE FROM projeto WHERE id = ?";
         try (Connection conn = ConexaoDB.getConexao();
@@ -71,5 +105,48 @@ public class ProjetoDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+    }
+
+    // Helper para não repetir o mapeamento de ResultSet -> Projeto
+    private Projeto mapearProjeto(ResultSet rs) throws SQLException {
+
+        Projeto p = new Projeto();
+
+        p.setId(rs.getString("id"));
+        p.setDemandaId(rs.getString("demanda_id"));
+        p.setTitulo(rs.getString("titulo"));
+        p.setDescricao(rs.getString("descricao"));
+        p.setStatus(rs.getString("status"));
+        p.setDataInicio(rs.getDate("data_inicio"));
+        p.setDataFimPrevista(rs.getDate("data_fim_prevista"));
+        p.setResponsavelId(rs.getString("responsavel_id"));
+        p.setDataCriacao(rs.getTimestamp("data_criacao"));
+
+        return p;
+    }
+    
+ // DASHBOARD - Contar projetos concluídos por ano
+    public java.util.Map<Integer, Integer> contarProjetosConcluidosPorAno() throws SQLException {
+        java.util.Map<Integer, Integer> resultado = new java.util.LinkedHashMap<>();
+        
+        // Consulta SQL considerando o status como 'CONCLUIDO' e extraindo o ano da data
+        // (Sintaxe compatível com MySQL. Se usar PostgreSQL, substitua YEAR() por EXTRACT(YEAR FROM ...))
+        String sql = "SELECT YEAR(data_fim_prevista) AS ano, COUNT(*) AS total " +
+                     "FROM projeto " +
+                     "WHERE status = 'CONCLUIDO' " +
+                     "GROUP BY YEAR(data_fim_prevista) " +
+                     "ORDER BY ano DESC";
+
+        try (Connection conn = ConexaoDB.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int ano = rs.getInt("ano");
+                int total = rs.getInt("total");
+                resultado.put(ano, total);
+            }
+        }
+        return resultado;
     }
 }
