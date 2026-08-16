@@ -52,11 +52,11 @@ public class Anexo {
         this.nomeArquivo = nomeArquivo;
     }
 
-    public String getCaminhoArquivo() {
+    public String getCaminho() {
         return caminhoArquivo;
     }
 
-    public void setCaminhoArquivo(String caminhoArquivo) {
+    public void setCaminho(String caminhoArquivo) {
         this.caminhoArquivo = caminhoArquivo;
     }
 

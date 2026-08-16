@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.List, br.edu.ifba.model.Projeto" %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -69,7 +70,7 @@
                         <tr>
                             <td class="fw-bold text-secondary px-4">#<%= p.getId() %></td>
                             <td class="fw-semibold text-dark"><%= p.getTitulo() %></td>
-                            <td class="text-secondary"><%= p.getOrientador() %></td>
+                            <td class="text-secondary"><%= p.getResponsavelId() %></td>
                             <td>
                                 <span class="<%= statusClass %>">
                                     <%= status %>

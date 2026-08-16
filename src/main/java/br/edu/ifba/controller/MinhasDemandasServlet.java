@@ -20,32 +20,25 @@ public class MinhasDemandasServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Recupera a sessão e o usuário que está logado atualmente
         HttpSession session = request.getSession();
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
 
-        // 2. Proteção de rota: Se não tiver ninguém logado, manda pro login
         if (usuarioLogado == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
         try {
-            // 3. Instancia o DAO
             DemandaDAO demandaDAO = new DemandaDAO();
             
-            // 4. Busca a lista do banco convertendo o ID do usuário para String e joga na variável
-            List<Demanda> demandasDoProfessor = demandaDAO.listarPorOrientador(String.valueOf(usuarioLogado.getId()));
+            // CORREÇÃO: Usa listarPorUsuario passando o ID do usuário logado (criador da demanda)
+            List<Demanda> minhasDemandas = demandaDAO.listarPorUsuario(usuarioLogado.getId());
             
-            // 5. Guarda a lista preenchida no "request" para o JSP ler
-            request.setAttribute("minhasDemandas", demandasDoProfessor);
-
-            // 6. Empurra tudo para a tela visual
+            request.setAttribute("minhasDemandas", minhasDemandas);
             request.getRequestDispatcher("minhasDemandas.jsp").forward(request, response);
             
         } catch (Exception e) {
             e.printStackTrace();
-            // Em caso de erro no banco, manda pra tela com mensagem
             request.setAttribute("mensagemErro", "Erro ao carregar suas demandas.");
             request.getRequestDispatcher("minhasDemandas.jsp").forward(request, response);
         }

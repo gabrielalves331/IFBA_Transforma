@@ -35,7 +35,7 @@ public class ProjetoServlet extends HttpServlet {
         else if (acao.equals("excluir")) {
             String id = request.getParameter("id");
             try {
-                dao.excluir(Integer.parseInt(id)); // Ajuste conforme o tipo do seu ID (int/String)
+            	dao.excluir(id); 
                 response.sendRedirect("ProjetoServlet?acao=listar");
             } catch (Exception e) {
                 throw new ServletException("Erro ao excluir projeto", e);

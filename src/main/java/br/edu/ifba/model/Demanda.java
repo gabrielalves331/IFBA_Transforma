@@ -17,14 +17,20 @@ public class Demanda {
     private String status;
     private String tipoCriador;
     private String descDemandante;
-    private String orientadorId; // ADICIONADO AQUI
+    private String orientadorId;
 
-    public String getOrientadorId() {
-        return orientadorId;
+    // --- CONSTRUTOR PADRÃO ---
+    public Demanda() {
     }
 
-    public void setOrientadorId(String orientadorId) {
-        this.orientadorId = orientadorId;
+    // --- GETTERS E SETTERS ---
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsuarioId() {
@@ -35,20 +41,12 @@ public class Demanda {
         this.usuarioId = usuarioId;
     }
 
-    public String getDescDemandante() {
-        return descDemandante;
+    public int getSubareaId() {
+        return subareaId;
     }
 
-    public void setDescDemandante(String descDemandante) {
-        this.descDemandante = descDemandante;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setSubareaId(int subareaId) {
+        this.subareaId = subareaId;
     }
 
     public String getTitulo() {
@@ -59,6 +57,54 @@ public class Demanda {
         this.titulo = titulo;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getContexto() {
+        return contexto;
+    }
+
+    public void setContexto(String contexto) {
+        this.contexto = contexto;
+    }
+
+    public String getJustificativa() {
+        return justificativa;
+    }
+
+    public void setJustificativa(String justificativa) {
+        this.justificativa = justificativa;
+    }
+
+    public String getImpactoEsperado() {
+        return impactoEsperado;
+    }
+
+    public void setImpactoEsperado(String impactoEsperado) {
+        this.impactoEsperado = impactoEsperado;
+    }
+
+    public Date getPrazo() {
+        return prazo;
+    }
+
+    public void setPrazo(Date prazo) {
+        this.prazo = prazo;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -67,11 +113,27 @@ public class Demanda {
         this.status = status;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getTipoCriador() {
+        return tipoCriador;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setTipoCriador(String tipoCriador) {
+        this.tipoCriador = tipoCriador;
+    }
+
+    public String getDescDemandante() {
+        return descDemandante;
+    }
+
+    public void setDescDemandante(String descDemandante) {
+        this.descDemandante = descDemandante;
+    }
+
+    public String getOrientadorId() {
+        return orientadorId;
+    }
+
+    public void setOrientadorId(String orientadorId) {
+        this.orientadorId = orientadorId;
     }
 }

@@ -4,7 +4,7 @@ import br.edu.ifba.dao.DemandaDAO;
 import br.edu.ifba.model.Demanda;
 import br.edu.ifba.model.Usuario;
 import java.io.IOException;
-
+import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/CadastrarDemandaServlet")
+@WebServlet("/CadastrarDemandaServlet" )
 public class CadastrarDemandaServlet extends HttpServlet {
     
     @Override
@@ -28,43 +28,36 @@ public class CadastrarDemandaServlet extends HttpServlet {
             return;
         }
         
-        String titulo = request.getParameter("titulo");
-        String descricao = request.getParameter("descricao");
-        
-        Demanda novaDemanda = new Demanda();
-        novaDemanda.setTitulo(titulo);
-        novaDemanda.setDescricao(descricao);
-        
-        // CORREÇÃO 1: Atribui o ID do usuário criador da demanda (convertido para String)
-        if (usuarioLogado.getId() != null) {
-            novaDemanda.setUsuarioId(String.valueOf(usuarioLogado.getId()));
-        }
-        
-        // Regra de negócio baseada no tipo de perfil
-        if (usuarioLogado.getTipo() != null && 
-           (usuarioLogado.getTipo().equalsIgnoreCase("Professor Orientador") || 
-            usuarioLogado.getTipo().equalsIgnoreCase("Professor"))) {
+        try {
+            Demanda novaDemanda = new Demanda();
+            novaDemanda.setTitulo(request.getParameter("titulo"));
+            novaDemanda.setDescricao(request.getParameter("descricao"));
+            novaDemanda.setContexto(request.getParameter("contexto"));
+            novaDemanda.setImpactoEsperado(request.getParameter("impactoEsperado"));
+            novaDemanda.setUsuarioId(usuarioLogado.getId());
+            novaDemanda.setStatus("Submetida");
             
-            novaDemanda.setStatus("Em Andamento");
-            novaDemanda.setDescDemandante("Cadastrado pelo Professor: " + usuarioLogado.getNome());
+            // Tratamento de Subárea
+            String subareaIdStr = request.getParameter("subareaId");
+            novaDemanda.setSubareaId(subareaIdStr != null ? Integer.parseInt(subareaIdStr) : 1);
             
-            // CORREÇÃO 2: Converte Long para String para evitar erro de tipo incompatível
-            novaDemanda.setOrientadorId(String.valueOf(usuarioLogado.getId())); 
-            
-        } else {
-            // Se for Empresa / Comunidade
-            novaDemanda.setStatus("Pendente");
-            novaDemanda.setDescDemandante(usuarioLogado.getNome());
-            novaDemanda.setOrientadorId(null);
-        }
-        
-        DemandaDAO dao = new DemandaDAO();
-        boolean sucesso = dao.cadastrar(novaDemanda);
-        
-        if (sucesso) {
-            response.sendRedirect("MinhasDemandasServlet");
-        } else {
-            request.setAttribute("erro", "Erro ao salvar a demanda no banco de dados.");
+            // Tratamento de Prazo
+            String prazoStr = request.getParameter("prazo");
+            if (prazoStr != null && !prazoStr.isEmpty()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                novaDemanda.setPrazo(new java.sql.Date(sdf.parse(prazoStr).getTime()));
+            }
+
+            DemandaDAO dao = new DemandaDAO();
+            if (dao.cadastrar(novaDemanda)) {
+                session.setAttribute("mensagemSucesso", "Demanda cadastrada com sucesso!");
+                response.sendRedirect("MinhasDemandasServlet");
+            } else {
+                throw new Exception("Erro ao inserir no banco.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("mensagemErro", "Erro ao salvar demanda: " + e.getMessage());
             request.getRequestDispatcher("novaDemanda.jsp").forward(request, response);
         }
     }

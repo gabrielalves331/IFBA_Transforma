@@ -1,13 +1,15 @@
 <%@page import="br.edu.ifba.model.Usuario"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-    // 1. Pega o usuário da sessão de forma segura
+    // 1. Pega o usuÃ¡rio da sessÃ£o de forma segura
     Usuario user = (Usuario) session.getAttribute("usuario");
     String tipo = (user != null && user.getTipo() != null) ? user.getTipo() : "";
     
-    // 2. Define a página de Painel padrão
+    // 2. Define a pÃ¡gina de Painel padrÃ£o
     String painel = "dashboardEstudante.jsp";
     
-    // 3. Ajusta o link do painel baseado no perfil do usuário
+    // 3. Ajusta o link do painel baseado no perfil do usuÃ¡rio
     if (tipo.equalsIgnoreCase("Professor Orientador") || tipo.equalsIgnoreCase("Professor")) {
         painel = "dashboardProfessor.jsp"; 
     } else if (tipo.equalsIgnoreCase("Administrador") || tipo.equalsIgnoreCase("Admin")) {
@@ -28,14 +30,14 @@
             IFBA Transforma
         </h2>
         
-        <!-- MENU DE NAVEGAÇÃO -->
+        <!-- MENU DE NAVEGAÃ‡ÃƒO -->
         <nav class="sidebar-menu nav flex-column gap-1">
-            <!-- Link do painel dinâmico -->
+            <!-- Link do painel dinÃ¢mico -->
             <a href="<%= painel %>" class="nav-link fw-semibold rounded py-2 px-3 transition-all">
                 Painel
             </a>
             
-            <%-- VERIFICAÇÃO DE MENOS POR TIPO DE USUÁRIO --%>
+            <%-- VERIFICAÃ‡ÃƒO DE MENOS POR TIPO DE USUÃRIO --%>
             
             <% if (tipo.equalsIgnoreCase("Administrador") || tipo.equalsIgnoreCase("Admin")) { %>
                 <!-- MENU DO ADMINISTRADOR -->
@@ -63,7 +65,7 @@
         </nav>
     </div>
     
-    <!-- BOTÃO SAIR / LOGOUT -->
+    <!-- BOTÃƒO SAIR / LOGOUT -->
     <div class="btn-sair-container pt-3 border-top mt-auto" style="border-color: var(--color-border, #dee2e6) !important;">
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="btn btn-danger w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2" style="border-radius: var(--radius-md, 8px);">
             <span>Sair</span>

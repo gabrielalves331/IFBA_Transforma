@@ -2,6 +2,15 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <%@ page import="br.edu.ifba.model.Usuario" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    if (session.getAttribute("usuario") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -72,7 +81,7 @@
                     <tbody>
                         <!-- LINHA FORMULÁRIO DE INSERÇÃO RÁPIDA -->
                         <tr class="table-light" style="border-bottom: 2px solid var(--color-border);">
-                            <form action="CadastrarUsuarioAdminServlet" method="POST">
+                            <form action="UsuarioServlet" method="POST">
                                 <td>
                                     <input type="text" name="id" class="input-inline" placeholder="Ex: 20261" required>
                                 </td>
@@ -124,7 +133,10 @@
                                             data-tipo="<%= u.getTipo() %>">
                                         Editar
                                     </button>
-                                    <button class="btn btn-danger btn-sm-custom flex-grow-1 shadow-sm">Excluir</button>
+                                    <a href="UsuarioServlet?acao=excluir&id=<%= u.getId() %>" 
+   class="btn btn-danger btn-sm-custom flex-grow-1 shadow-sm"
+   onclick="return confirm('Excluir usuário?')">Excluir</a>
+
                                 </div>
                             </td>
                         </tr>
@@ -142,7 +154,6 @@
                 </table>
             </div>
         </div>
-
         <!-- MODAL DE EDIÇÃO DE USUÁRIO (POSICIONADO CORRETAMENTE FORA DA TABELA) -->
         <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -152,7 +163,7 @@
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
-                        <form action="EditarUsuarioAdminServlet" method="POST">
+                        <form action="UsuarioServlet" method="POST">
                             
                             <div class="mb-3">
                                 <label class="form-label fw-bold text-secondary">ID / Matrícula</label>

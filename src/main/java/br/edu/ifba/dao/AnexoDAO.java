@@ -25,7 +25,7 @@ public class AnexoDAO {
             stmt.setString(1, anexo.getId());
             stmt.setString(2, anexo.getProjetoId());
             stmt.setString(3, anexo.getNomeArquivo());
-            stmt.setString(4, anexo.getCaminhoArquivo());
+            stmt.setString(4, anexo.getCaminho());
             stmt.setString(5, anexo.getTipoArquivo());
 
             stmt.executeUpdate();
@@ -95,7 +95,7 @@ public class AnexoDAO {
         a.setId(rs.getString("id"));
         a.setProjetoId(rs.getString("projeto_id"));
         a.setNomeArquivo(rs.getString("nome_arquivo"));
-        a.setCaminhoArquivo(rs.getString("caminho_arquivo"));
+        a.setCaminho(rs.getString("caminho_arquivo"));
         a.setTipoArquivo(rs.getString("tipo_arquivo"));
         a.setDataUpload(rs.getTimestamp("data_upload"));
 

@@ -6,28 +6,26 @@ import java.sql.Timestamp;
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    // CORREÇÃO: ID agora é String, compatível com VARCHAR(20) do banco de dados
+    private String id; 
     private String nome;
     private String email;
     private String senha;
-    private String tipo;    // Ex: "ADMIN", "ESTUDANTE"
+    private String tipo;    
     private Perfil perfil;  
     private Timestamp dataCriacao;
 
-    // Construtor vazio obrigatório
     public Usuario() {
     }
 
-    // CONSTRUTOR ANTIGO (MANTIDO para não quebrar chamadas antigas com String id)
     public Usuario(String id, String nome, String email, String senha, String tipo) {
-        this.setId(id);
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.tipo = tipo;
     }
 
-    // Construtor para cadastro rápido (sem ID/Data)
     public Usuario(String nome, String email, String senha, String tipo) {
         this.nome = nome;
         this.email = email;
@@ -35,26 +33,12 @@ public class Usuario implements Serializable {
         this.tipo = tipo;
     }
 
-    // Getters e Setters flexíveis
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    // Método utilitário para sobrecarga com String
     public void setId(String id) {
-        if (id != null && !id.trim().isEmpty()) {
-            try {
-                this.id = Long.parseLong(id.trim());
-            } catch (NumberFormatException e) {
-                this.id = null;
-            }
-        } else {
-            this.id = null;
-        }
+        this.id = id;
     }
 
     public String getNome() {

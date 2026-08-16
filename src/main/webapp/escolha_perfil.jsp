@@ -1,63 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha seu Perfil - IFBA Transforma</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <!-- Seu CSS Customizado -->
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f8f9fa; height: 100vh; display: flex; align-items: center; }
+        .card-perfil { transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; border: none; }
+        .card-perfil:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .icon-perfil { font-size: 3rem; color: #2c3e50; }
+    </style>
 </head>
-<body class="auth-container">
+<body>
 
-    <!-- LADO ESQUERDO: SELEÇÃO DE PERFIL -->
-    <main class="left-side d-flex align-items-center justify-content-center p-4" style="flex: 1; height: 100vh; overflow-y: auto;">
-        <div class="profile-container w-100" style="max-width: 480px;">
-            <h1 class="page-title mb-2" style="font-size: var(--fs-xl);">Cadastre-se</h1>
-            <p class="subtitulo mb-4">Selecione o perfil que melhor define você na plataforma:</p>
-            
-            <div class="profile-options d-flex flex-column gap-3 mb-4">
-                
-                <!-- CARD ESTUDANTE -->
-                <a href="cadastroEstudante.jsp" class="profile-card p-3 text-decoration-none d-block rounded shadow-sm border transition-all" style="border-color: var(--color-border); background-color: var(--color-surface);">
-                    <span class="profile-title d-block fw-bold text-dark mb-1" style="font-size: var(--fs-md);">Estudante</span>
-                    <span class="profile-desc d-block text-secondary small">Quero aplicar meus conhecimentos acadêmicos em projetos e ações de extensão reais.</span>
-                </a>
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold text-dark">Bem-vindo ao IFBA Transforma</h1>
+            <p class="text-muted">Para começar, selecione o perfil que melhor descreve você:</p>
+        </div>
 
-                <!-- CARD PROFESSOR -->
-                <a href="cadastroProfessor.jsp" class="profile-card p-3 text-decoration-none d-block rounded shadow-sm border transition-all" style="border-color: var(--color-border); background-color: var(--color-surface);">
-                    <span class="profile-title d-block fw-bold text-dark mb-1" style="font-size: var(--fs-md);">Professor / Orientador</span>
-                    <span class="profile-desc d-block text-secondary small">Quero gerenciar demandas, propor e orientar ações de extensão com as turmas.</span>
-                </a>
-
-                <!-- CARD COMUNIDADE/EMPRESA -->
-                <a href="cadastroComunidade.jsp" class="profile-card p-3 text-decoration-none d-block rounded shadow-sm border transition-all" style="border-color: var(--color-border); background-color: var(--color-surface);">
-                    <span class="profile-title d-block fw-bold text-dark mb-1" style="font-size: var(--fs-md);">Comunidade / Organização / Empresa</span>
-                    <span class="profile-desc d-block text-secondary small">Quero cadastrar demandas da sociedade e buscar soluções junto ao ecossistema acadêmico.</span>
-                </a>
-
+        <div class="row g-4 justify-content-center">
+            <!-- ESTUDANTE -->
+            <div class="col-md-4">
+                <div class="card card-perfil h-100 p-4 text-center" onclick="location.href='cadastroEstudante.jsp'">
+                    <div class="icon-perfil mb-3">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h3 class="h5 fw-bold">Estudante</h3>
+                    <p class="small text-muted">Quero participar de projetos e aplicar meus conhecimentos técnicos.</p>
+                    <button class="btn btn-outline-primary btn-sm mt-auto">Selecionar</button>
+                </div>
             </div>
 
-            <!-- BOTÃO VOLTAR -->
-            <div>
-                <a href="login.jsp" class="btn btn-outline-secondary btn-sm px-3 fw-bold">&larr; Voltar para o Login</a>
+            <!-- COMUNIDADE -->
+            <div class="col-md-4">
+                <div class="card card-perfil h-100 p-4 text-center" onclick="location.href='cadastroComunidade.jsp'">
+                    <div class="icon-perfil mb-3">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <h3 class="h5 fw-bold">Comunidade / ONG</h3>
+                    <p class="small text-muted">Tenho uma demanda social e preciso de apoio técnico do IFBA.</p>
+                    <button class="btn btn-outline-success btn-sm mt-auto">Selecionar</button>
+                </div>
+            </div>
+
+            <!-- PROFESSOR (Opcional, geralmente cadastro é interno, mas aqui está a opção) -->
+            <div class="col-md-4">
+                <div class="card card-perfil h-100 p-4 text-center" onclick="location.href='login.jsp'">
+                    <div class="icon-perfil mb-3">
+                        <i class="bi bi-person-badge-fill"></i>
+                    </div>
+                    <h3 class="h5 fw-bold">Professor / Servidor</h3>
+                    <p class="small text-muted">Quero orientar projetos e gerenciar demandas da minha área.</p>
+                    <button class="btn btn-outline-dark btn-sm mt-auto">Acessar Painel</button>
+                </div>
             </div>
         </div>
-    </main>
 
-     <!-- LADO DIREITO: LOGOTIPO -->
-        <div class="auth-brand-side">
-            <div class="logo-container">
-                <img src="logo_semlegenda.png" alt="Logo IFBA Transforma" class="logo-img">
-            </div>
+        <div class="text-center mt-5">
+            <p class="text-muted small">Já possui uma conta? <a href="login.jsp" class="fw-bold text-decoration-none">Faça login aqui</a></p>
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

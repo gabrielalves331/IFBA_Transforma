@@ -41,11 +41,8 @@ public class LoginServlet extends HttpServlet {
                     
                 } else if (tipoUsuario.equalsIgnoreCase("Professor Orientador") || tipoUsuario.equalsIgnoreCase("Professor")) {
                     response.sendRedirect("dashboardProfessor.jsp");
-                    
-                } else if (tipoUsuario.toLowerCase().contains("empresa")) {
-                    response.sendRedirect("dashboardEmpresa.jsp");
-                    
-                } else if (tipoUsuario.toLowerCase().contains("comunidade")) {
+                        
+                } else if (tipoUsuario.toLowerCase().contains("comunidade") || tipoUsuario.equalsIgnoreCase("empresa")) {
                     response.sendRedirect("dashboardComunidade.jsp");
                     
                 } else {
