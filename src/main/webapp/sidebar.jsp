@@ -37,29 +37,29 @@
                 Painel
             </a>
             
-            <%-- VERIFICAÇÃO DE MENOS POR TIPO DE USUÁRIO --%>
+            <%-- VERIFICAÇÃO DE MENUS POR TIPO DE USUÁRIO (CHAMANDO SERVLETS) --%>
             
             <% if (tipo.equalsIgnoreCase("Administrador") || tipo.equalsIgnoreCase("Admin")) { %>
                 <!-- MENU DO ADMINISTRADOR -->
-                <a href="demandasAdmin.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Demandas</a>
-                <a href="projetosAdmin.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Projetos</a>
-                <a href="meu_perfil.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
+                <a href="AdminDemandasServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Demandas</a>
+                <a href="AdminProjetosServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Projetos</a>
+                <a href="PerfilServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
                 
             <% } else if (tipo.equalsIgnoreCase("Professor Orientador") || tipo.equalsIgnoreCase("Professor")) { %>
                 <!-- MENU DO PROFESSOR -->
                 <a href="MinhasDemandasServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Minhas Demandas</a>
-                <a href="buscarDemandas.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Buscar Demandas</a>
-                <a href="meu_perfil.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
+                <a href="BuscarDemandasServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Buscar Demandas</a>
+                <a href="PerfilServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
                 
             <% } else if (tipo.toLowerCase().contains("empresa") || tipo.toLowerCase().contains("comunidade")) { %>
                 <!-- MENU DA EMPRESA / COMUNIDADE -->
                 <a href="MinhasDemandasServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Minhas Demandas</a>
-                <a href="meu_perfil.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
+                <a href="PerfilServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
                 
             <% } else { %>
                 <!-- MENU DO ESTUDANTE -->
-                <a href="buscarDemandas.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Buscar Demandas</a>
-                <a href="meu_perfil.jsp" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
+                <a href="BuscarDemandasServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Buscar Demandas</a>
+                <a href="PerfilServlet" class="nav-link fw-semibold rounded py-2 px-3 transition-all">Meu Perfil</a>
             <% } %>
             
         </nav>

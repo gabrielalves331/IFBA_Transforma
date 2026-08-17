@@ -57,7 +57,7 @@
         <!-- LADO DIREITO: LOGOTIPO -->
         <div class="auth-brand-side">
             <div class="logo-container">
-                <img src="logo_semlegenda.png" alt="Logo IFBA Transforma" class="logo-img">
+                <img src="${pageContext.request.contextPath}/logo_semlegenda.png" alt="Logo IFBA Transforma" class="logo-img">
             </div>
         </div>
     </div>

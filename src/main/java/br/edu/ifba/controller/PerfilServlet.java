@@ -1,16 +1,18 @@
 package br.edu.ifba.controller;
 
-import br.edu.ifba.dao.PerfilDAO;
-import br.edu.ifba.model.Perfil;
-import br.edu.ifba.model.Usuario;
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import br.edu.ifba.dao.PerfilDAO;
+import br.edu.ifba.model.Perfil;
+import br.edu.ifba.model.Usuario;
 
 @WebServlet(name = "PerfilServlet", urlPatterns = {"/PerfilServlet"} )
 public class PerfilServlet extends HttpServlet {

@@ -1,12 +1,13 @@
 package br.edu.ifba.dao;
 
-import br.edu.ifba.model.Etapa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.edu.ifba.model.Etapa;
 
 public class EtapaDAO {
 

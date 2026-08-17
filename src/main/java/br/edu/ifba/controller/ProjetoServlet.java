@@ -1,14 +1,16 @@
 package br.edu.ifba.controller;
 
-import br.edu.ifba.dao.ProjetoDAO;
-import br.edu.ifba.model.Projeto;
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import br.edu.ifba.dao.ProjetoDAO;
+import br.edu.ifba.model.Projeto;
 
 @WebServlet(name = "ProjetoServlet", urlPatterns = {"/ProjetoServlet"})
 public class ProjetoServlet extends HttpServlet {
@@ -16,9 +18,9 @@ public class ProjetoServlet extends HttpServlet {
     private ProjetoDAO dao = new ProjetoDAO();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String acao = request.getParameter("acao");
 
         // Se não tiver ação, por padrão ele lista os projetos
@@ -30,12 +32,12 @@ public class ProjetoServlet extends HttpServlet {
             } catch (Exception e) {
                 throw new ServletException("Erro ao listar projetos", e);
             }
-        } 
+        }
         // Ação de excluir
         else if (acao.equals("excluir")) {
             String id = request.getParameter("id");
             try {
-            	dao.excluir(id); 
+            	dao.excluir(id);
                 response.sendRedirect("ProjetoServlet?acao=listar");
             } catch (Exception e) {
                 throw new ServletException("Erro ao excluir projeto", e);
@@ -44,7 +46,7 @@ public class ProjetoServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Se precisar de POST para cadastrar/editar depois, a estrutura será aqui
     }

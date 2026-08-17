@@ -6,21 +6,18 @@ public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String nome; // Ex: ADMIN, PROFESSOR, ESTUDANTE, COMUNIDADE
+    private String usuarioId;
+    private String organizacao;
+    private String contato;
+    private String localidade;
+    private String curso;
+    private Integer semestre;
+    private String curriculoPath;
+    private String areaAtuacao;
+    private String disciplinas;
 
     // Construtor vazio
     public Perfil() {
-    }
-
-    // Construtor para cadastro/criação
-    public Perfil(String nome) {
-        this.nome = nome;
-    }
-
-    // Construtor completo
-    public Perfil(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
     }
 
     // Getters e Setters
@@ -32,11 +29,75 @@ public class Perfil implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public String getOrganizacao() {
+        return organizacao;
+    }
+
+    public void setOrganizacao(String organizacao) {
+        this.organizacao = organizacao;
+    }
+
+    public String getContato() {
+        return contato;
+    }
+
+    public void setContato(String contato) {
+        this.contato = contato;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public Integer getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(Integer semestre) {
+        this.semestre = semestre;
+    }
+
+    public String getCurriculoPath() {
+        return curriculoPath;
+    }
+
+    public void setCurriculoPath(String curriculoPath) {
+        this.curriculoPath = curriculoPath;
+    }
+
+    public String getAreaAtuacao() {
+        return areaAtuacao;
+    }
+
+    public void setAreaAtuacao(String areaAtuacao) {
+        this.areaAtuacao = areaAtuacao;
+    }
+
+    public String getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(String disciplinas) {
+        this.disciplinas = disciplinas;
     }
 }

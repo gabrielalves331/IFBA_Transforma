@@ -24,7 +24,8 @@
                 <h1>Cadastro de Estudante</h1>
                 <p class="instruction-text mb-4">Preencha os campos abaixo para criar sua conta institucional.</p>
                 
-                <form action="CadastroEstudanteServlet" method="POST">
+                <form action="UsuarioServlet" method="POST">
+                <input type="hidden" name="tipo" value="Estudante">
                     
                     <!-- SEÇÃO 1: DADOS PESSOAIS -->
                     <div class="row g-3 mb-3">

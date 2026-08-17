@@ -23,7 +23,7 @@
             </a>
             <div class="ms-auto d-flex gap-2">
                 <a href="login.jsp" class="btn btn-outline-primary fw-bold">Entrar</a>
-                <a href="escolherPerfil.jsp" class="btn btn-primary fw-bold">Cadastre-se</a> 
+                <a href="escolha_perfil.jsp" class="btn btn-primary fw-bold">Cadastre-se</a> 
             </div>
         </div>
     </nav>
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="col-lg-6 text-center">
-                    <img src="logo1.png" alt="Logo IFBA Transforma" class="img-fluid" style="max-width: 500px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));">
+                     <img src="${pageContext.request.contextPath}/img/logo_inteiro.png" alt="Logo IFBA Transformada" class="logo-img">
                 </div>
             </div>
         </div>
@@ -105,6 +105,6 @@
     </footer>
 
     <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+    <!-- Bootstrap JS Bundle (Sem o bloqueio de integridade) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script></body>
 </html>

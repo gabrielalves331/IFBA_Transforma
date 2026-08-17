@@ -1,6 +1,5 @@
 package br.edu.ifba.dao;
 
-import br.edu.ifba.model.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import br.edu.ifba.model.Usuario;
 
 public class UsuarioDAO {
 
@@ -63,8 +64,10 @@ public class UsuarioDAO {
     }
 
     public Usuario buscarPorId(String id) {
-        if (id == null || id.trim().isEmpty()) return null;
-        
+        if (id == null || id.trim().isEmpty()) {
+			return null;
+		}
+
         String sql = "SELECT * FROM usuario WHERE id = ?";
         Usuario usuario = null;
 
@@ -136,7 +139,9 @@ public class UsuarioDAO {
     }
 
     public boolean excluir(String id) {
-        if (id == null || id.trim().isEmpty()) return false;
+        if (id == null || id.trim().isEmpty()) {
+			return false;
+		}
         String sql = "DELETE FROM usuario WHERE id = ?";
 
         try (Connection conn = ConexaoDB.getConexao();
@@ -152,7 +157,7 @@ public class UsuarioDAO {
 
     private Usuario montarUsuario(ResultSet rs) throws SQLException {
         Usuario u = new Usuario();
-        u.setId(rs.getString("id")); 
+        u.setId(rs.getString("id"));
         u.setNome(rs.getString("nome"));
         u.setEmail(rs.getString("email"));
         u.setSenha(rs.getString("senha"));

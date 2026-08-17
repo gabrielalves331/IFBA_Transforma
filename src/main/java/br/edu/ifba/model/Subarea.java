@@ -1,7 +1,7 @@
 package br.edu.ifba.model;
 
 public class Subarea {
-    
+
     private int id;
     private String nome;
     private int areaId;
@@ -11,7 +11,7 @@ public class Subarea {
     }
 
     // --- GETTERS E SETTERS ---
-    
+
     public int getId() {
         return id;
     }

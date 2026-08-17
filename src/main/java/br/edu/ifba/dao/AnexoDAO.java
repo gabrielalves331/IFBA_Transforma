@@ -1,36 +1,29 @@
 package br.edu.ifba.dao;
 
-import br.edu.ifba.model.Anexo;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifba.model.Anexo;
+
 public class AnexoDAO {
 
-    // CREATE
-    public void salvar(Anexo anexo) throws SQLException {
+	public void salvar(Anexo anexo) throws SQLException {
+	    // Removido o campo 'id' pois é AUTO_INCREMENT no banco
+	    String sql = "INSERT INTO anexo (projeto_id, nome_arquivo, caminho, tipo) VALUES (?, ?, ?, ?)";
 
-        String sql =
-                "INSERT INTO anexo (id, projeto_id, nome_arquivo, caminho_arquivo, tipo_arquivo) " +
-                "VALUES (?, ?, ?, ?, ?)";
-
-        try (Connection conn = ConexaoDB.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, anexo.getId());
-            stmt.setString(2, anexo.getProjetoId());
-            stmt.setString(3, anexo.getNomeArquivo());
-            stmt.setString(4, anexo.getCaminho());
-            stmt.setString(5, anexo.getTipoArquivo());
-
-            stmt.executeUpdate();
-        }
-    }
+	    try (Connection conn = ConexaoDB.getConexao();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, anexo.getProjetoId());
+	        stmt.setString(2, anexo.getNomeArquivo());
+	        stmt.setString(3, anexo.getCaminho());
+	        stmt.setString(4, anexo.getTipoArquivo());
+	        stmt.executeUpdate();
+	    }
+	}
 
     // READ - todos os anexos de um projeto
     public List<Anexo> listarPorProjeto(String projetoId) throws SQLException {

@@ -1,6 +1,7 @@
 package br.edu.ifba.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +26,10 @@ public class LogoutServlet extends HttpServlet {
 
     private void processLogout(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        
+
         // 1. Resgata a sessão atual sem criar nova
         HttpSession session = request.getSession(false);
-        
+
         if (session != null) {
             // 2. Invalida completamente a sessão no servidor
             session.invalidate();

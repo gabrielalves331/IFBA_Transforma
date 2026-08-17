@@ -7,12 +7,12 @@ public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // CORREÇÃO: ID agora é String, compatível com VARCHAR(20) do banco de dados
-    private String id; 
+    private String id;
     private String nome;
     private String email;
     private String senha;
-    private String tipo;    
-    private Perfil perfil;  
+    private String tipo;
+    private Perfil perfil;
     private Timestamp dataCriacao;
 
     public Usuario() {
